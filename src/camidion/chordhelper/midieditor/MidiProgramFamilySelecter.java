@@ -1,7 +1,6 @@
 package camidion.chordhelper.midieditor;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JComboBox;
 
@@ -10,7 +9,7 @@ import camidion.chordhelper.music.MIDISpec;
 /**
  * MIDI Instrument (Program) Family - 音色ファミリーの選択
  */
-public class MidiProgramFamilySelecter extends JComboBox<String> implements ActionListener {
+public class MidiProgramFamilySelecter extends JComboBox<String> {
 	private MidiProgramSelecter programSelecter = null;
 	public MidiProgramFamilySelecter() { this(null); }
 	public MidiProgramFamilySelecter( MidiProgramSelecter mps ) {

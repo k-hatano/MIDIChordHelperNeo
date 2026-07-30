@@ -1,14 +1,13 @@
 package camidion.chordhelper.midieditor;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JComboBox;
 
 import camidion.chordhelper.music.Key;
 import camidion.chordhelper.music.Note;
 
-public class KeySignatureComboBox extends JComboBox<Key> implements ActionListener {
+public class KeySignatureComboBox extends JComboBox<Key> {
 	{
 		for(int co5 = -Key.MAX_SHARPS_OR_FLATS ; co5 <= Key.MAX_SHARPS_OR_FLATS ; co5++)
 			addItem(new Key(co5));

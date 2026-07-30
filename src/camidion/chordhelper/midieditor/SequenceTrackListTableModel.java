@@ -196,9 +196,9 @@ public class SequenceTrackListTableModel extends AbstractTableModel {
 			trackModelList.get(row).setRecordingChannel((String)val);
 			break;
 		case CHANNEL: {
-			Integer ch;
+			int ch;
 			try {
-				ch = new Integer((String)val);
+				ch = Integer.parseInt((String)val);
 			}
 			catch( NumberFormatException e ) {
 				ch = -1;

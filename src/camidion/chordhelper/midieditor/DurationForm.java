@@ -93,7 +93,7 @@ public class DurationForm extends JPanel implements ActionListener, ChangeListen
 	class DurationModel extends SpinnerNumberModel {
 		public DurationModel() { super( ppq, 1, ppq*4*4, 1 ); }
 		public void setDuration( int value ) {
-			setValue( new Integer(value) );
+			setValue(value);
 		}
 		public int getDuration() {
 			return getNumber().intValue();

@@ -9,7 +9,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.security.AccessControlException;
 import java.util.Arrays;
 import java.util.EventObject;
 import java.util.Iterator;
@@ -104,7 +103,7 @@ public class PlaylistTable extends JTable {
 		try {
 			midiFileChooser = new MidiFileChooser();
 		}
-		catch( ExceptionInInitializerError|NoClassDefFoundError|AccessControlException e ) {
+		catch( ExceptionInInitializerError|NoClassDefFoundError e ) {
 			// アプレットの場合、Webクライアントマシンのローカルファイルには
 			// アクセスできないので、ファイル選択ダイアログは使用不可。
 			midiFileChooser = null;

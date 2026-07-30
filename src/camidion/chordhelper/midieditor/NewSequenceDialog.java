@@ -593,7 +593,7 @@ public class NewSequenceDialog extends JDialog {
 			on_note_no = -1;
 		}
 		public void mouseEntered(MouseEvent e) {
-			if((e.getModifiers() & InputEvent.BUTTON1_MASK) == InputEvent.BUTTON1_MASK) {
+			if((e.getModifiersEx() & InputEvent.BUTTON1_DOWN_MASK) == InputEvent.BUTTON1_DOWN_MASK) {
 				catchEvent(e);
 			}
 		}

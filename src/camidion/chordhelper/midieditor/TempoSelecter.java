@@ -106,7 +106,7 @@ public class TempoSelecter extends JPanel {
 	 * @param qpm BPM(QPM)の値
 	 */
 	public void setTempo(int qpm) {
-		tempoSpinnerModel.setValue(new Integer(qpm));
+		tempoSpinnerModel.setValue(qpm);
 		tempoValueLabel.setText(""+qpm);
 	}
 	/**

@@ -15,7 +15,7 @@ public class ReceiverListView extends AbstractTransceiverListView<Receiver> {
 	public DataFlavor[] getElementDataFlavorArray() { return receiverFlavorArray; }
 	@Override
 	protected String toolTipTextFor(Receiver rx) {
-		return "受信端子(Rx)：ドラッグ＆ドロップしてTxに接続できます。";
+		return "受信端子(Rx)：ドラッグ&ドロップしてTxに接続できます。";
 	}
 	@Override
 	public ReceiverListModel getModel() { return (ReceiverListModel) super.getModel(); }
@@ -30,6 +30,7 @@ public class ReceiverListView extends AbstractTransceiverListView<Receiver> {
 			@Override
 			public boolean importData(TransferSupport support) {
 				try {
+					@SuppressWarnings("resource")
 					Transmitter tx = (Transmitter)support.getTransferable().getTransferData(getDestinationDataFlavor());
 					tx.setReceiver(getElementAt(support.getDropLocation().getDropPoint()));
 					return true;

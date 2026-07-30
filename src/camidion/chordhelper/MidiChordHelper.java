@@ -1,22 +1,11 @@
 package camidion.chordhelper;
 
-import java.applet.Applet;
-import java.applet.AppletContext;
-import java.applet.AppletStub;
-import java.applet.AudioClip;
 import java.awt.BorderLayout;
 import java.awt.Font;
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,7 +23,7 @@ import camidion.chordhelper.midieditor.SequenceTrackListTableModel;
 /**
  * MIDI Chord Helper を Java アプリとして起動します。
  */
-public class MidiChordHelper extends JFrame implements AppletStub, AppletContext {
+public class MidiChordHelper extends JFrame {
 	/**
 	 * MIDI Chord Helper を Java アプリとして起動します。
 	 * @param args コマンドライン引数
@@ -85,7 +74,6 @@ public class MidiChordHelper extends JFrame implements AppletStub, AppletContext
 			remove(startingLabel);
 			add(applet, BorderLayout.CENTER);
 			add(statusBar, BorderLayout.SOUTH);
-			applet.setStub(this);
 			applet.init();
 			setIconImage(applet.getIconImage());
 			pack();
@@ -112,38 +100,4 @@ public class MidiChordHelper extends JFrame implements AppletStub, AppletContext
 			editor.play(fileList);
 		});
 	}
-	@Override
-	public boolean isActive() { return true; }
-	@Override
-	public URL getDocumentBase() { return null; }
-	@Override
-	public URL getCodeBase() { return null; }
-	@Override
-	public String getParameter(String name) { return null; }
-	@Override
-	public AppletContext getAppletContext() { return this; }
-	@Override
-	public void appletResize(int width, int height) {}
-	@Override
-	public AudioClip getAudioClip(URL url) { return null; }
-	@Override
-	public Image getImage(URL url) {
-		return Toolkit.getDefaultToolkit().getImage(url);
-	}
-	@Override
-	public Applet getApplet(String name) { return null; }
-	@Override
-	public Enumeration<Applet> getApplets() { return (null); }
-	@Override
-	public void showDocument(URL url) {}
-	@Override
-	public void showDocument(URL url, String target) {}
-	@Override
-	public void showStatus(String status) { statusBar.setText(status); }
-	@Override
-	public InputStream getStream(String key) { return null; }
-	@Override
-	public Iterator<String> getStreamKeys() { return null; }
-	@Override
-	public void setStream(String key, InputStream stream) throws IOException {}
 }

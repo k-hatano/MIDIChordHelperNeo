@@ -23,7 +23,6 @@ import javax.sound.midi.Sequencer;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
-import javax.swing.JApplet;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLayeredPane;
@@ -64,18 +63,23 @@ import camidion.chordhelper.pianokeyboard.MidiKeyboardPanel;
 import camidion.chordhelper.pianokeyboard.PianoKeyboardAdapter;
 
 /**
- * MIDI Chord Helper - Circle-of-fifth oriented chord pad
- * （アプレットクラス）
+ * MIDI Chord Helper - Circle-of-fifth oriented chord pad（旧アプレットクラス）
  *
  *	@auther
- *		Copyright (C) 2004-2017 ＠きよし - Akiyoshi Kamide
+ *		Copyright (C) 2004-2026 ＠きよし - Akiyoshi Kamide
  *		http://www.yk.rim.or.jp/~kamide/music/chordhelper/
  */
-public class ChordHelperApplet extends JApplet {
+public class ChordHelperApplet extends JPanel {
+
+	public ChordHelperApplet() {
+		// Appletの時代が終わったため、親クラスを JApplet → JPanel に変更したが、
+		// JPanel のデフォルトレイアウト設定のままではリサイズについていけないので、
+		// 旧 JApplet のデフォルトレイアウト設定に合わせる。
+		super.setLayout(new BorderLayout());
+	}
+
 	/////////////////////////////////////////////////////////////////////
-	//
-	// JavaScript などからの呼び出しインターフェース
-	//
+	// JApplet の頃から引き継いだ、JavaScript などからの呼び出しインターフェース
 	/////////////////////////////////////////////////////////////////////
 	/**
 	 * 未保存の修正済み MIDI ファイルがあるかどうか調べます。
@@ -266,12 +270,11 @@ public class ChordHelperApplet extends JApplet {
 	 */
 	public static class VersionInfo {
 		public static final String NAME = "MIDI Chord Helper";
-		public static final String VERSION = "Ver.20180414.1";
-		public static final String COPYRIGHT = "Copyright (C) 2004-2018";
+		public static final String VERSION = "Ver.20260730.1";
+		public static final String COPYRIGHT = "Copyright (C) 2004-2018,2026";
 		public static final String AUTHER = "＠きよし - Akiyoshi Kamide";
 		public static final String URL = "http://www.yk.rim.or.jp/~kamide/music/chordhelper/";
 	}
-	@Override
 	public String getAppletInfo() {
 		return String.join(" ",
 				VersionInfo.NAME, VersionInfo.VERSION,
@@ -314,7 +317,6 @@ public class ChordHelperApplet extends JApplet {
 	private ImageIcon imageIcon;
 	public ImageIcon getImageIcon() { return imageIcon; }
 
-	@Override
 	public void init() {
 		// アイコン画像のロード
 		URL imageIconUrl = getClass().getResource("midichordhelper.png");
@@ -324,7 +326,7 @@ public class ChordHelperApplet extends JApplet {
 		AboutMessagePane about = new AboutMessagePane(imageIcon);
 		//
 		// 背景色の取得
-		Color rootPaneDefaultBgcolor = getContentPane().getBackground();
+		Color rootPaneDefaultBgcolor = getBackground();
 		//
 		// コードダイアグラム、コードボタン、ピアノ鍵盤、およびそれらの仮想MIDIデバイスを生成
 		CapoComboBoxModel capoComboBoxModel = new CapoComboBoxModel();
@@ -459,7 +461,7 @@ public class ChordHelperApplet extends JApplet {
 				addItemListener(event->{
 					boolean isDark = ((JToggleButton)event.getSource()).isSelected();
 					Color col = isDark ? Color.black : null;
-					getContentPane().setBackground(isDark ? Color.black : rootPaneDefaultBgcolor);
+					setBackground(isDark ? Color.black : rootPaneDefaultBgcolor);
 					mainSplitPane.setBackground(col);
 					keyboardSplitPane.setBackground(col);
 					enterButtonLabel.setDarkMode(isDark);
@@ -545,7 +547,7 @@ public class ChordHelperApplet extends JApplet {
 				}});
 			}});
 		}};
-		setContentPane(new JLayeredPane() {
+		add(new JLayeredPane() {
 			{
 				add(anoGakkiPane = new AnoGakkiPane(), JLayeredPane.PALETTE_LAYER);
 				addComponentListener(new ComponentAdapter() {
@@ -568,23 +570,12 @@ public class ChordHelperApplet extends JApplet {
 		});
 		setPreferredSize(new Dimension(750,470));
 	}
-	@Override
 	public void destroy() { deviceTreeModel.forEach(m -> m.close()); }
-	@Override
 	public void start() {
 		//
 		// コードボタンで設定されている現在の調をピアノキーボードに伝える
 		chordMatrix.fireKeySignatureChanged();
-		//
-		// アプレットのパラメータにMIDIファイルのURLが指定されていたらそれを再生する
-		String midiUrl = getParameter("midi_file");
-		if( midiUrl != null ) try {
-			play(addToPlaylist(midiUrl));
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, e, VersionInfo.NAME, JOptionPane.WARNING_MESSAGE);
-		}
 	}
-	@Override
 	public void stop() { sequencerModel.stop(); }
 
 	private void setKeySignature(Key key) {
